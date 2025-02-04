@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎂 生日祝福</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f9f9f9;
+            padding: 50px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+        .text {
+            font-size: 24px;
+            color: #4CAF50;
+            cursor: pointer;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+        #chat-box {
+            display: none;
+            background: white;
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            width: 80%;
+            max-width: 400px;
+            text-align: left;
+            margin-top: 20px;
+            position: relative;
+        }
+        #chat-text {
+            font-size: 18px;
+            white-space: pre-line;
+            min-height: 50px;
+        }
+        #send-btn {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            padding: 5px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            display: none;
+        }
+        #send-btn:hover {
+            background-color: #388E3C;
+        }
+    </style>
+</head>
+<body>
+
+    <p id="text1" class="text" onclick="showNext(1)">hi 🐙</p>
+    <p id="text2" class="text" onclick="showNext(2)">今天是你的生日🤲🏻🎂</p>
+
+    <div id="chat-box">
+        <p id="chat-text"></p>
+        <button id="send-btn" onclick="nextPage()">Send</button>
+    </div>
+
+    <audio id="bg-music" src="https://example.com/sunyanzi-music.mp3" autoplay loop></audio>
+
+    <script>
+        let texts = document.querySelectorAll(".text");
+        let chatBox = document.getElementById("chat-box");
+        let chatText = document.getElementById("chat-text");
+        let sendBtn = document.getElementById("send-btn");
+        let index = 0;
+        let message = "很高兴陪你走过这些幸福的日子:)\n祝你生日快乐喔🎁";
+        
+        function showNext(step) {
+            texts[step - 1].style.opacity = 1;
+            texts[step - 1].style.cursor = "default";
+            if (step === 2) {
+                setTimeout(() => {
+                    texts[1].style.opacity = 0; 
+                    setTimeout(() => {
+                        chatBox.style.display = "block";
+                        typeMessage(0);
+                    }, 500);
+                }, 1000);
+            }
+        }
+
+        function typeMessage(i) {
+            if (i < message.length) {
+                chatText.innerHTML += message[i];
+                setTimeout(() => typeMessage(i + 1), 100);
+            } else {
+                sendBtn.style.display = "block";
+            }
+        }
+
+        function nextPage() {
+            alert("跳转到下一个界面！"); // 这里可以换成实际的跳转逻辑
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            texts[0].style.opacity = 1;
+        });
+    </script>
+
+</body>
+</html>
