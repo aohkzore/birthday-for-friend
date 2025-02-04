@@ -9,7 +9,6 @@
             font-family: Arial, sans-serif;
             text-align: center;
             background-color: #f9f9f9;
-            padding: 50px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -17,11 +16,27 @@
             height: 100vh;
         }
         .text {
-            font-size: 24px;
-            color: #4CAF50;
-            cursor: pointer;
+            font-size: 32px;  /* 加大字体 */
+            font-weight: bold;
             opacity: 0;
             transition: opacity 1s ease-in-out;
+        }
+        #text1 {
+            color: black; /* hi 变成黑色 */
+        }
+        #blessing-btn {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 18px;
+            border: none;
+            background-color: #4CAF50;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+            display: none; /* 初始隐藏 */
+        }
+        #blessing-btn:hover {
+            background-color: #388E3C;
         }
         #chat-box {
             display: none;
@@ -59,8 +74,10 @@
 </head>
 <body>
 
-    <p id="text1" class="text" onclick="showNext(1)">hi 🐙</p>
-    <p id="text2" class="text" onclick="showNext(2)">今天是你的生日🤲🏻🎂</p>
+    <p id="text1" class="text">hi 🐙</p>
+    <button id="blessing-btn" onclick="showNext()">Receive Blessing 🍀</button>
+
+    <p id="text2" class="text">今天是你的生日🤲🏻🎂</p>
 
     <div id="chat-box">
         <p id="chat-text"></p>
@@ -71,23 +88,23 @@
 
     <script>
         let texts = document.querySelectorAll(".text");
+        let blessingBtn = document.getElementById("blessing-btn");
         let chatBox = document.getElementById("chat-box");
         let chatText = document.getElementById("chat-text");
         let sendBtn = document.getElementById("send-btn");
         let index = 0;
         let message = "很高兴陪你走过这些幸福的日子:)\n祝你生日快乐喔🎁";
-        
-        function showNext(step) {
-            texts[step - 1].style.opacity = 1;
-            texts[step - 1].style.cursor = "default";
-            if (step === 2) {
-                setTimeout(() => {
-                    texts[1].style.opacity = 0; 
-                    setTimeout(() => {
-                        chatBox.style.display = "block";
-                        typeMessage(0);
-                    }, 500);
-                }, 1000);
+        let step = 0;
+
+        function showNext() {
+            if (step === 0) {
+                texts[1].style.opacity = 1; // 显示“今天是你的生日”
+                step++;
+            } else if (step === 1) {
+                chatBox.style.display = "block"; // 显示对话框
+                typeMessage(0);
+                blessingBtn.style.display = "none"; // 隐藏按钮
+                step++;
             }
         }
 
@@ -105,7 +122,12 @@
         }
 
         document.addEventListener("DOMContentLoaded", function() {
-            texts[0].style.opacity = 1;
+            setTimeout(() => {
+                texts[0].style.opacity = 1; // hi 🐙 先浮现
+                setTimeout(() => {
+                    blessingBtn.style.display = "inline-block"; // 显示按钮
+                }, 1500);
+            }, 500);
         });
     </script>
 
